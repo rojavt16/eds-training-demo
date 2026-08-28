@@ -1,0 +1,13 @@
+.banner {
+  background-color: blue;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.banner a {
+  background: white;
+  color: blue;
+  padding: 10px 20px;
+  text-decoration: none;
+}
