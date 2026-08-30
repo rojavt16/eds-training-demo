@@ -1,17 +1,42 @@
-.banner img {
+.banner {
+  background: #0078d4;
+  padding: 30px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.banner-content img {
   width: 400px;
-  max-width: 100%;
-  margin-bottom: 20px;
+  height: auto;
   border-radius: 8px;
+}
+
+.banner-text {
+  color: white;
+}
+
+.banner-text h2 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.banner-text p {
+  color: white;
+  margin-bottom: 20px;
 }
 
 .banner-btn {
   display: inline-block;
-  padding: 10px 20px;
-  margin-top: 15px;
+  padding: 12px 24px;
   background: white;
-  color: blue;
+  color: #0078d4;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 25px;
   font-weight: bold;
 }
