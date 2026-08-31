@@ -1,0 +1,9 @@
+.embed-wrapper {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.embed-wrapper iframe {
+  max-width: 100%;
+  border: none;
+}
