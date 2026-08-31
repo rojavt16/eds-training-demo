@@ -1,42 +1,59 @@
 export default async function decorate(block) {
-  const jsonUrl = block.querySelector('a')?.href;
+  const response = await fetch('/products.json');
+  const json = await response.json();
 
-  if (!jsonUrl) {
-    block.innerHTML = '<p>Products JSON URL is missing.</p>';
-    return;
-  }
+  const products = json.data || [];
 
-  try {
-    const response = await fetch(jsonUrl);
+  const pageSize = 20;
+  let currentPage = 1;
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch products: ${response.status}`);
-    }
+  function renderPage(page) {
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
 
-    const json = await response.json();
+    const currentProducts = products.slice(start, end);
 
-    const products = json.data || [];
+    const totalPages = Math.ceil(products.length / pageSize);
 
-    const list = document.createElement('ul');
-    list.className = 'products-list';
+    block.innerHTML = `
+      <div class="products">
+        ${currentProducts.map((product) => `
+          <div class="product-card">
+            <h3>${product.Name}</h3>
+            <p><strong>Category:</strong> ${product.Category}</p>
+            <p><strong>Price:</strong> ₹${product.Price}</p>
+          </div>
+        `).join('')}
+      </div>
 
-    products.forEach((product) => {
-      const item = document.createElement('li');
-      item.className = 'product-item';
+      <div class="pagination">
+        <button id="prevBtn" ${page === 1 ? 'disabled' : ''}>
+          Previous
+        </button>
 
-      item.innerHTML = `
-        <h3>${product.Name}</h3>
-        <p>Category: ${product.Category}</p>
-        <p>Price: ₹${product.Price}</p>
-      `;
+        <span class="page-info">
+          Page ${page} of ${totalPages}
+        </span>
 
-      list.append(item);
+        <button id="nextBtn" ${page === totalPages ? 'disabled' : ''}>
+          Next
+        </button>
+      </div>
+    `;
+
+    const prevBtn = block.querySelector('#prevBtn');
+    const nextBtn = block.querySelector('#nextBtn');
+
+    prevBtn.addEventListener('click', () => {
+      currentPage--;
+      renderPage(currentPage);
     });
 
-    block.innerHTML = '';
-    block.append(list);
-  } catch (error) {
-    console.error('Error loading products:', error);
-    block.innerHTML = '<p>Unable to load products.</p>';
+    nextBtn.addEventListener('click', () => {
+      currentPage++;
+      renderPage(currentPage);
+    });
   }
+
+  renderPage(currentPage);
 }
