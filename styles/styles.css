@@ -328,3 +328,6 @@ main .section.grey-section {
   background-color: lightgrey;
   padding: 30px;
 }
+ul > li > p.button-wrapper {
+  margin-top: 10px;
+}
