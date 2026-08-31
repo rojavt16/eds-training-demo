@@ -1,0 +1,26 @@
+version: 1
+
+indices:
+  pages:
+    include:
+      - /**
+    exclude:
+      - /query-index.json
+    target: /query-index.json
+
+    properties:
+      path:
+        select: none
+        value: path
+
+      title:
+        select: head > title
+        value: textContent(el)
+
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+
+      image:
+        select: head > meta[property="og:image"]
+        value: attribute(el, "content")
